@@ -1,0 +1,1 @@
+export const FETCH_CURRENT = 'fetch_cities';

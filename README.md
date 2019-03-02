@@ -1,68 +1,152 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# WeatherChart
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+App to get city weather information, with detailed info showed as charts.
 
-### `npm start`
+## User Stories
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-  **404:** As a User, if I try to enter a route on my domain that  doesn't exist, I will be redirected to the Dashboard screen
+-  **Signup:** As a User I want to be able to sign-up / sign-in using OAuth protocols, specifically google.
+-  **Login:** As a User I want to be able to login to my app. Access to basic features of the app will not be login restricted 
+-  **Logout:** As a user I can logout from the platform so no one else can use it
+-  **Search cities** As a User I want to be able to enter the name of a city in a searchbar and see results based on my input.
+-  **Add cities to my dashboard** As a user I want to select a city and add it to my dashboard.
+-  **See weather information** As a user I want to see basic information about the weather in the cities in my dashboard
+-  **Save cities** As a logged User I want save cities of my dashboard so I can see their information next time I enter the app.
+-  **See info of a city** As a User I want to be able to see more detailed information about the weather in a city added to my dashboard (weather in the next days, pressure)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Backlog
 
-### `npm test`
+Charts:
+- Make different charts for the data shown in the page
+- Make the charts interactive
+- Link different charts together so the interaction of the user affects them all.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+User profile:
+- Have a User settings page.
+- Selecting a default city.
 
-### `npm run build`
+Geo Location:
+- Add geolocation.
+- Show weather data based on the location of the user
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Drag and drop components:
+ - Make the cities in the dashboard draggable so the user can sort them the way he wants.
+ - Save the positions of the cities in the dashboard for logged users so the order is preserved during sessions.
+ - Be able to arrange the different charts of the detailed info section in different places. Also save the preferences for logged users.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Chart transitions:
+  - Make transitions for the charts so when the data changes it is shown in a smooth way
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Component transitions:
+  - Make animations for the enter/leave cycles of the components when the component rendered changes (implementing react transitions).
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  
+# Client
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Routes
+| Method | Path               | Component | Permissions | Behaviour                               |
+|--------|--------------------|-----------|-------------|-----------------------------------------|
+|        | /                  | Homepage  | None        | Shows the homepage of the app           |
+| get    | /cities/:id        | City      | None        | Shows detailed information about a city |
+| get    | /profile *(Backlog)* | Profile   | Logged user | Shows user profile page                 |
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Components
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+ - City card Component:
+  Input: city(id, name country, temp, rain, )
+ - Header component:
+  Button: Login / signup / logout
 
-### Analyzing the Bundle Size
+ - City Weather Component:
+  Input: cityWeather
+  Output: date
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  - General weather Component:
+  Output: currentTemp, forecast
+  
+  - Temperature Component:
+    Output: max_temp, min_temp, avg_temp
+  
+  - Humidity Component:
+    Output: humidity
+  
+  - Pressure Component:
+    Output: groundLevel, seaLevel
 
-### Making a Progressive Web App
+  - Wind Component:
+    Output: windSpeed, windDeg
+  
+  - RainSnow Component:
+    Output: rainChance, snowChance
+  
+  - Clouds Component:
+    Output: cloudiness
+  
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Services
 
-### Advanced Configuration
+- WeatherChart will work with a Redux architecture, which eliminates the need of services by centralizing API calls in the actions. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- Also, the app will get the weather information from [Openweathermap](https://openweathermap.org) 
 
-### Deployment
+# Server
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Models
 
-### `npm run build` fails to minify
+User model
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+googleID : String
+```
+
+
+## API Endpoints (backend routes)
+
+- GET /auth/google
+  - redirect to /auth/google/callback if successful
+- GET /auth/google/callback
+  - 200 with User if successful
+- GET /auth/logout
+  - receive status code 204 if successful
+- GET /cities
+  - receive array of cityIDs when successful
+- POST /cities
+  - body:
+    - cityID
+  - Links a new CityID to a user
+  - updates user in session  
+- DELETE /cities/:id
+  - remove from favorites
+  - updates user in session
+
+
+  
+
+## Links
+
+### Trello/Kanban
+
+[Kanban board](https://drive.google.com/file/d/1jY73-UEnGDB4E1WLpQzQ7rQAtZOnZZ2M/view?usp=sharing) 
+
+### Git
+
+The url to your repository and to your deployed project
+
+[Client repository Link](http://github.com)
+[Server repository Link](http://github.com)
+
+[Deploy Link](http://heroku.com)
+
+### Slides
+
+The url to your presentation slides
+
+[Slides Link](https://slides.com/matiasferreiro/weatherchart#/)

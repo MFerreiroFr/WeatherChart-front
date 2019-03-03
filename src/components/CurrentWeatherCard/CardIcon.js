@@ -1,11 +1,29 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const show = keyframes`
+
+  0% {
+    transform: translateY(-6.5rem);
+  }
+
+  80% {
+    transform: translateY(1rem);
+  }
+
+  100%{
+    transform: translateY(0);
+  }
+
+`
 
 const CardIcon= styled.div`
   height: 100%;
-  width: 50%;
   display: flex;
   justify-content:center;
   align-items: center;
+  
+  transform-origin: top;
+  overflow: hidden;
 
   & img {
     height: 100%;
@@ -18,9 +36,18 @@ const CardIcon= styled.div`
   }
 
   & p::after {
-    content: "%";
+  content: "${props => props.measure}";
     font-size: 2.4rem;
   }
+
+  & * {
+    transform: translateY(-6.5rem);
+    animation: ${show} .5s ease-out;
+    animation-delay: ${props => props.order * 0.1}s;
+    animation-fill-mode: forwards; 
+  }
 `
+
+
 
 export default CardIcon;

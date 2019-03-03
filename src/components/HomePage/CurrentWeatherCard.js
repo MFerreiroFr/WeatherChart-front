@@ -20,17 +20,9 @@ class CurrentWeatherCard extends Component {
     return (
       <CardContainer>
         <CardContainer.Temp>{Math.round(this.props.weather.main.temp - 273)}º</CardContainer.Temp>
-        <CardContainer.Location>Barcelona</CardContainer.Location>
-        <CardContainer.Info>
-          <CardContainer.Icon><img src="images/cloudWithBorder.svg" alt="Cloudiness" /><p>60</p></CardContainer.Icon>
-          <CardContainer.Icon><img src="images/cloudWithBorder.svg" alt="Cloudiness" /><p>40</p></CardContainer.Icon>
-        </CardContainer.Info><div>
-          
-          <p>
-            {' '}
-            60 <span>%</span>
-          </p>
-        </div>
+          <CardContainer.Icon order="1" measure="º"><img src="images/cloudWithBorder.svg" alt="Cloudiness" /><p>{Math.round(this.props.weather.main.temp_max - 273)}</p></CardContainer.Icon>
+          <CardContainer.Icon order="2" measure="%"><img src="images/cloudWithBorder.svg" alt="Cloudiness" /><p>{this.props.weather.clouds.all}</p></CardContainer.Icon>
+          <CardContainer.Icon order="3" measure="º"><img src="images/cloudWithBorder.svg" alt="Cloudiness" /><p>{Math.round(this.props.weather.main.temp_min - 273)}</p></CardContainer.Icon>
       </CardContainer>
     );
   };

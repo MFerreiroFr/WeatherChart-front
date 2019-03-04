@@ -1,4 +1,4 @@
-import { FETCH_CURRENT} from '../actions/types';
+import { FETCH_CURRENT } from '../actions/types';
 
 export default (state = null, action) => {
   switch(action.type) {

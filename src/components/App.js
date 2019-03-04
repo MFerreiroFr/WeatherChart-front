@@ -6,6 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 
 
 import HomePage from './HomePage/HomePage';
+import Details from './Details/Details';
 
 const GlobalStyle = createGlobalStyle`
 *, *::before, *::after {
@@ -33,6 +34,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route exact path="/" component={HomePage} />
+            <Route exact path="/details" component={Details} />
           </div>
         </BrowserRouter>
       </div>

@@ -4,15 +4,18 @@ import SearchBar from './SearchBar';
 import styled, { keyframes } from 'styled-components';
 import * as actions from '../../actions';
 import CardLocation from '../CurrentWeatherCard/CardLocation';
-// import SunOrMoon from './SunOrMoon';
+import SunOrMoon from './SunOrMoon';
 
 import CurrentWeatherCard from './CurrentWeatherCard';
 
 const StyledDiv = styled.div`
   height: 100vh;
   width: 100vw;
-  background-color: dodgerblue;
+  background-image: url('/images/day.png');
   overflow-x: hidden;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const rotate = rotDeg => keyframes`
@@ -70,7 +73,7 @@ class HomePage extends Component {
           src="images/sunAndMoon.svg"
           alt="sunAndMoon"
         /> */}
-        {/* <SunOrMoon sunrise={this.props.weather.sys.sunrise} sunset={this.props.weather.sys.sunset}/> */}
+        <SunOrMoon sunrise={this.props.weather.sys.sunrise} sunset={this.props.weather.sys.sunset} delay="1.2"/>
         <CurrentWeatherCard />
       </StyledDiv>
     );

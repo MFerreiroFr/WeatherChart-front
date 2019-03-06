@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchCurrentWeatherFromCoords, setCoords } from '../../actions';
 import NavItem from './NavItem';
 
 const StyledNavButton = styled.div`
@@ -12,7 +13,7 @@ const StyledNavButton = styled.div`
   font-size: 1.6rem;
   height: 7.2rem;
   width: 7.2rem;
-  background-color: #02567F;
+  background-color: #02567f;
   position: absolute;
   bottom: 2.4rem;
   right: 2.4rem;
@@ -25,7 +26,7 @@ const StyledNavButton = styled.div`
   & span {
     position: relative;
     margin-top: 3.5rem;
-    background-color: ${props => props.opened ? 'transparent' : 'white'};
+    background-color: ${props => (props.opened ? 'transparent' : 'white')};
 
     &,
     &::before,
@@ -37,44 +38,68 @@ const StyledNavButton = styled.div`
 
     &::before,
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       background-color: white;
-      transition: all .2s;
+      transition: all 0.2s;
     }
 
-    &::before { 
-      top: ${props => props.opened ? '0' : '-.8rem' };
-      transform: ${props => props.opened ? 'rotate(135deg)': 'rotate(0deg)'};
-
+    &::before {
+      top: ${props => (props.opened ? '0' : '-.8rem')};
+      transform: ${props => (props.opened ? 'rotate(135deg)' : 'rotate(0deg)')};
     }
-    &::after { 
-      top: ${props => props.opened ? '0' : '.8rem' };
-      transform: ${props => props.opened ? 'rotate(-135deg)': 'rotate(0deg)'}; 
+    &::after {
+      top: ${props => (props.opened ? '0' : '.8rem')};
+      transform: ${props =>
+        props.opened ? 'rotate(-135deg)' : 'rotate(0deg)'};
     }
-
-
   }
-`
+`;
 class NavButton extends Component {
-
-  state = ({opened: false});
+  state = { opened: false };
 
   handleClick = () => {
-    this.setState({ opened: !this.state.opened});
-  }
+    this.setState({ opened: !this.state.opened });
+  };
 
+  handleLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude; 
+        this.props.setCoords(lat,lon)
+        this.props.fetchCurrentWeatherFromCoords(lat, lon);
+      }
+      );
+    }
+  };
   render() {
     return (
       <StyledNavButton onClick={this.handleClick} opened={this.state.opened}>
-        <span></span>
-        <NavItem opened={this.state.opened} order='1' left><Link to='/details'><img src="images/stats-dots.svg" /></Link></NavItem>
-        <NavItem opened={this.state.opened} order='2' up-left><img src="images/location.svg" /></NavItem>
-        <NavItem opened={this.state.opened} order='3' up><img src="images/plus.svg" /></NavItem>
+        <span />
+        <NavItem opened={this.state.opened} order="1" left>
+          <Link to={`/details/${this.props.weather.id}`}>
+            <img src="images/stats-dots.svg" />
+          </Link>
+        </NavItem>
+        <NavItem
+          opened={this.state.opened}
+          order="2"
+          up-left
+          onClick={this.handleLocation}
+        >
+          <img src="images/location.svg" />
+        </NavItem>
+        <NavItem opened={this.state.opened} order="3" up>
+          <img src="images/plus.svg" />
+        </NavItem>
       </StyledNavButton>
-    )
+    );
   }
 }
 
-export default NavButton;
+function mapStateToProps({ weather }) {
+  return { weather }
+}
+export default connect(mapStateToProps, { fetchCurrentWeatherFromCoords, setCoords })(NavButton);

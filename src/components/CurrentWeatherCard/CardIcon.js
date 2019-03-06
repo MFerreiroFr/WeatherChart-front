@@ -33,6 +33,7 @@ const CardIcon= styled.div`
   & p {
     font-size: 3.2rem;
     margin-left: .8rem;
+    color: #fff
   }
 
   & p::after {

@@ -17,7 +17,8 @@ const StyledDetails = styled.div`
 class Details extends Component {
   state = { data: [], filteredData: [], animate: true };
   async componentDidMount() {
-    await this.props.fetchForecast();
+    console.log(this.props)
+    await this.props.fetchForecast(this.props.match.params.id);
     this.clearDataSet(this.props.forecast);
   }
 

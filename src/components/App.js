@@ -34,7 +34,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/details" component={Details} />
+            <Route exact path="/details/:id" component={Details} />
           </div>
         </BrowserRouter>
       </div>

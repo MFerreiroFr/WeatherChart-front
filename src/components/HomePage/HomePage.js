@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import styled, { keyframes } from 'styled-components';
-import * as actions from '../../actions';
+import { fetchCurrentWeather, fetchCurrentWeatherFromCoords } from '../../actions';
 import CardLocation from '../CurrentWeatherCard/CardLocation';
 import SunOrMoon from './SunOrMoon';
 
@@ -44,12 +44,16 @@ const SunAndMoon = styled.img.attrs({
 class HomePage extends Component {
   state= ({isNight: false})
   async componentDidMount() {
-    await this.props.fetchCurrentWeather();
-    this.isNight();
+    if(this.props.coords.length) {
+      await this.props.fetchCurrentWeatherFromCoords(this.props.coords.lat, this.props.coords.lon)
+    } else  {
+      await this.props.fetchCurrentWeather();
+    }
+
+    this.setState({ isNight: this.isNight()})
   }
 
-  isNight = () => this.setState(
-    { isNight: this.props.weather.sys.sunset * 1000 < new Date() });
+  isNight = () => this.props.weather.sys.sunset * 1000 < new Date();
 
   calculateRotation = () => {
     if (this.props.weather) {
@@ -64,6 +68,9 @@ class HomePage extends Component {
     } else return;
   };
 
+  componentDidUpdate() {
+    if(this.isNight() !== this.state.isNight) this.setState({isNight: this.isNight()})
+  }
   render() {
     
     if(!this.props.weather) return null;
@@ -82,10 +89,10 @@ class HomePage extends Component {
   }
 }
 
-function mapStateToProps({ weather }) {
-  return { weather };
+function mapStateToProps({ weather, coords }) {
+  return { weather, coords };
 }
 export default connect(
   mapStateToProps,
-  actions
+  { fetchCurrentWeather, fetchCurrentWeatherFromCoords }
 )(HomePage);

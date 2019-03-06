@@ -22,7 +22,6 @@ right: -25%;
 class NavWrapper extends Component {
   state = ({menuOpened: false});
   toggleMenu = () => {
-    console.log(this.state.menuOpened)
     this.setState({
       menuOpened: !this.state.menuOpened,
     })

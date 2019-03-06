@@ -5,14 +5,14 @@ import {Link} from 'react-router-dom';
 import NavItem from './NavItem';
 
 const StyledNavButton = styled.div`
-  border:none;
+  border: none;
   background: none;
   color: white;
   text-align: center;
   font-size: 1.6rem;
   height: 7.2rem;
   width: 7.2rem;
-  background-color: red;
+  background-color: #02567F;
   position: absolute;
   bottom: 2.4rem;
   right: 2.4rem;
@@ -62,7 +62,6 @@ class NavButton extends Component {
   state = ({opened: false});
 
   handleClick = () => {
-    console.log('opened!')
     this.setState({ opened: !this.state.opened});
   }
 

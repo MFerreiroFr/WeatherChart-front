@@ -11,7 +11,7 @@ import CurrentWeatherCard from './CurrentWeatherCard';
 const StyledDiv = styled.div`
   height: 100vh;
   width: 100vw;
-  background-image: url('/images/day.png');
+  background-image: ${props => props.isNight ?  "url('/images/night.png')" : `url('/images/day.png')` };
   overflow-x: hidden;
   position: relative;
   background-size: cover;
@@ -42,9 +42,14 @@ const SunAndMoon = styled.img.attrs({
 `;
 
 class HomePage extends Component {
-  componentDidMount() {
-    this.props.fetchCurrentWeather();
+  state= ({isNight: false})
+  async componentDidMount() {
+    await this.props.fetchCurrentWeather();
+    this.isNight();
   }
+
+  isNight = () => this.setState(
+    { isNight: this.props.weather.sys.sunset * 1000 < new Date() });
 
   calculateRotation = () => {
     if (this.props.weather) {
@@ -52,28 +57,25 @@ class HomePage extends Component {
       const sunset = this.props.weather.sys.sunset * 1000;
       const max = new Date() > sunset ? sunrise  + (24 * 3600 * 1000): sunset;
       const min = new Date() <= sunset ? sunrise : sunset;
-      console.log('max: ', max)
       const result =
         ((new Date() - min) * 100) /
         (max - min);
-      console.log('result', result);
       return max === sunset ? result : result + 100
     } else return;
   };
 
   render() {
-    console.log(this.props);
+    
     if(!this.props.weather) return null;
-    console.log(this.calculateRotation());
     return (
-      <StyledDiv>
+      <StyledDiv isNight={this.state.isNight}>
         <CardLocation>{this.props.weather.name}</CardLocation>
         {/* <SunAndMoon
           rotation={this.calculateRotation()}
           src="images/sunAndMoon.svg"
           alt="sunAndMoon"
         /> */}
-        <SunOrMoon sunrise={this.props.weather.sys.sunrise} sunset={this.props.weather.sys.sunset} delay="1.2"/>
+        <SunOrMoon sunrise={this.props.weather.sys.sunrise} sunset={this.props.weather.sys.sunset} delay="1.2s"/>
         <CurrentWeatherCard />
       </StyledDiv>
     );

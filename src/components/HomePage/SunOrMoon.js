@@ -6,11 +6,9 @@ const calculateRotation = (sunrise, sunset) => {
     sunset = sunset * 1000;
     const max = new Date() > sunset ? sunrise  + (24 * 3600 * 1000): sunset;
     const min = new Date() <= sunset ? sunrise : sunset;
-    console.log('max: ', max)
     const result =
       ((new Date() - min) * 100) /
       (max - min);
-    console.log('result', result);
     return result;
 };
 

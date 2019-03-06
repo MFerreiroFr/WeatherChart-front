@@ -13,7 +13,7 @@ grid-template-rows: 1fr 1fr;
 /* grid-gap: 1.2rem; */
 justify-items: center;
 align-items: center;
-background-color: #e7fcfb;
+background-color: #81c5ff;
 `
 CardContainer.Temp = CurrentTemp;
 CardContainer.Location = CardLocation;

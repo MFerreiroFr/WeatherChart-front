@@ -6,7 +6,7 @@ const CurrentTemp = styled.div`
   left: 50vw;
   transform:translateX(-50%);
   
-  font-size: 5.4rem;
+  font-size: 7.2rem;
   font-weight: 600;
 
   color: white;

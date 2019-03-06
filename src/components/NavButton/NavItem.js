@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const NavItem = styled.button`
   width: 5.4rem;
   height: 5.4rem;
-  background-color: ${props => props.color || 'blueviolet'};
+  background-color: ${props => props.color || '#048acc'};
   position: absolute;
   bottom: 1.5rem;
   right: 1.5rem;

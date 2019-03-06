@@ -23,7 +23,6 @@ class SearchBar extends Component {
 
   handleChange = (event) => {
     this.setState({ term: event.target.value });
-    console.log(this.state.term)
     // if (this.timer) clearTimeout(this.timer);
     // this.timer = setTimeout(async () => {
     //   await this.searchForTerm(this.state.term);

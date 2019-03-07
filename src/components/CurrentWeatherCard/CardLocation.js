@@ -8,7 +8,7 @@ const CardLocation = styled.div`
   font-size: 2.8rem;
   position: absolute;
   top: 2.4rem;
-  color: white;
+  color: #fffff0;
 `
 
 export default CardLocation;

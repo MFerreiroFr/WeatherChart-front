@@ -22,10 +22,10 @@ class LineChart extends Component {
       .range([margin.left, width - margin.right])
 
     const max = d3.max(data, d => d.high);
-
+    const min = Math.min(0, d3.min(data, d => d.low));
     const yScale = d3
       .scaleLinear()
-      .domain([0, max])
+      .domain([min, max])
       .range([height - margin.bottom, margin.top]);
 
     const areaGenerator = d3.area()

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 
 const width = 375;
-const height = 300;
+const height = 250;
 const margin = {top: 20, left: 40, bottom: 40, right: 12};
 
 class LineChart extends Component {
@@ -22,7 +22,6 @@ class LineChart extends Component {
       .range([margin.left, width - margin.right])
 
     const max = d3.max(data, d => d.high);
-    const min = d3.min(data, d => d.low);
 
     const yScale = d3
       .scaleLinear()
@@ -101,15 +100,7 @@ class LineChart extends Component {
               .attr("stroke-dashoffset", 0)
               .attr("pointer-events","all");
           }
-      }
-      // let area = d3.selectAll('#area');
-      //   area
-      // .attr("transform", "translate(0, 300)")
-      // .transition()
-      // .duration(3000)
-      // .attr("transform", "translate(0,0)");
-
-      
+      }  
     }
   }
 

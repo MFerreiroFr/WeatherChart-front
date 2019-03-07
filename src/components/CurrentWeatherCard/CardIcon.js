@@ -21,7 +21,7 @@ const CardIcon= styled.div`
   display: flex;
   justify-content:center;
   align-items: center;
-  
+  grid-area: ${props => props.area};
   transform-origin: top;
   overflow: hidden;
 
@@ -33,7 +33,7 @@ const CardIcon= styled.div`
   & p {
     font-size: 3.2rem;
     margin-left: .8rem;
-    color: #fff
+    color: ${props => props.darkTheme ? "#000" : "#fffff0" }
   }
 
   & p::after {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import d3 from 'd3';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchForecast } from '../../actions';
 import styled from 'styled-components';
 
@@ -12,7 +12,14 @@ import GaugeContainer from './Gauges/GaugeContainer';
 
 
 const StyledDetails = styled.div`
-  background-color: #51c5ff;
+  background-color: #d9e1e9;
+  height: 100vh;
+
+  & img {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    height: 4rem;
+  }
 `;
 class Details extends Component {
   state = { data: [], filteredData: [], animate: true };
@@ -38,8 +45,6 @@ class Details extends Component {
       };
     });
 
-    const cleanDataCopy = [...cleanData];
-    const cleanDataByDay = this.chunk(cleanDataCopy, 8);
     this.setState({ data: cleanData, filteredData: cleanData });
   }
 
@@ -69,7 +74,7 @@ class Details extends Component {
     // if(this.state.data.length){
       return (
         <StyledDetails>
-          Details
+          <Link to='/'><img src="/images/back.svg" /></Link>
           <DraggableLineChart data={this.state.data} updateFilters = {this.updateFilters} animate={this.state.animate}/>
            <TempLineChart data = {this.state.filteredData}/>
            <GaugeContainer>

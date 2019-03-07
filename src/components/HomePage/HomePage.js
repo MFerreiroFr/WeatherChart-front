@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { fetchCurrentWeather, fetchCurrentWeatherFromCoords } from '../../actions';
 import CardLocation from '../CurrentWeatherCard/CardLocation';
 import SunOrMoon from './SunOrMoon';
@@ -18,34 +18,15 @@ const StyledDiv = styled.div`
   background-repeat: no-repeat;
 `;
 
-const rotate = rotDeg => keyframes`
-  from { 
-    transform: translate(-50%, -50%) rotate(-90deg);
-  }
 
-  to {
-    
-    transform: translate(-50%, -50%) rotate(${(rotDeg / 100) * 180 - 90}deg);
-  }
-`;
 
-const SunAndMoon = styled.img.attrs({
-  src: 'images/sunAndMoon.svg',
-  alt: 'sunAndMoon'
-})`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ${props => rotate(props.rotation)} 2s ease-out;
-  animation-fill-mode: forwards;
-`;
 
 class HomePage extends Component {
   state= ({isNight: false})
   async componentDidMount() {
     if(this.props.coords.length) {
-      await this.props.fetchCurrentWeatherFromCoords(this.props.coords.lat, this.props.coords.lon)
+      console.log(this.props.coords)
+      await this.props.fetchCurrentWeatherFromCoords(this.props.coords[0], this.props.coords[1])
     } else  {
       await this.props.fetchCurrentWeather();
     }
@@ -77,13 +58,8 @@ class HomePage extends Component {
     return (
       <StyledDiv isNight={this.state.isNight}>
         <CardLocation>{this.props.weather.name}</CardLocation>
-        {/* <SunAndMoon
-          rotation={this.calculateRotation()}
-          src="images/sunAndMoon.svg"
-          alt="sunAndMoon"
-        /> */}
         <SunOrMoon sunrise={this.props.weather.sys.sunrise} sunset={this.props.weather.sys.sunset} delay="1.2s"/>
-        <CurrentWeatherCard />
+        <CurrentWeatherCard darkTheme= {this.isNight()}/>
       </StyledDiv>
     );
   }

@@ -3,7 +3,6 @@ import * as d3 from 'd3';
 
 const width = 130;
 const height = 90;
-const margin = { top: 20, left: 40, bottom: 40, right: 12 };
 
 class GaugeChart extends Component {
   state = {
@@ -17,15 +16,8 @@ class GaugeChart extends Component {
     const { data } = nextProps;
     if (!data) return {};
 
-    const colorScale = d3
-      .scaleSequential()
-      .domain(d3.extent(data, d => d.avg))
-      .interpolator(d3.interpolateRdYlBu);
+    
 
-    // get the angle for each slice
-    // 2PI / 365
-    const perSliceAngle = Math.PI;
-    const sliceData = [0.9, 0.1];
     const arcGenerator = d3
       .arc()
       .innerRadius(50)
